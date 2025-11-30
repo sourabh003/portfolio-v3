@@ -1,0 +1,921 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Full Stack Developer Portfolio</title>
+
+		<!-- Tailwind CSS -->
+		<script src="https://cdn.tailwindcss.com"></script>
+
+		<!-- Lucide Icons -->
+		<script src="https://unpkg.com/lucide@latest"></script>
+
+		<!-- Google Fonts -->
+		<link
+			href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap"
+			rel="stylesheet"
+		/>
+
+		<script>
+			tailwind.config = {
+				darkMode: "class",
+				theme: {
+					extend: {
+						fontFamily: {
+							sans: ["Inter", "sans-serif"],
+						},
+						colors: {
+							dark: {
+								900: "#0f172a",
+								800: "#1e293b",
+								700: "#334155",
+							},
+							accent: {
+								400: "#a78bfa",
+								500: "#8b5cf6", // Violet/Purple
+								600: "#7c3aed",
+							},
+						},
+						animation: {
+							"fade-in-up": "fadeInUp 0.8s ease-out forwards",
+							blob: "blob 7s infinite",
+							float1: "float1 8s ease-in-out infinite",
+							float2: "float2 6s ease-in-out infinite",
+						},
+						keyframes: {
+							fadeInUp: {
+								"0%": { opacity: "0", transform: "translateY(20px)" },
+								"100%": { opacity: "1", transform: "translateY(0)" },
+							},
+							blob: {
+								"0%": { transform: "translate(0px, 0px) scale(1)" },
+								"33%": { transform: "translate(30px, -50px) scale(1.1)" },
+								"66%": { transform: "translate(-20px, 20px) scale(0.9)" },
+								"100%": { transform: "translate(0px, 0px) scale(1)" },
+							},
+							float1: {
+								"0%, 100%": { transform: "translate(0, 0) rotate(2deg)" },
+								"50%": { transform: "translate(10px, -10px) rotate(-2deg)" },
+							},
+							float2: {
+								"0%, 100%": { transform: "translate(0, 0) rotate(-1deg)" },
+								"50%": { transform: "translate(-5px, 5px) rotate(1deg)" },
+							},
+						},
+					},
+				},
+			};
+		</script>
+
+		<style>
+			body {
+				background-color: #0f172a;
+				color: #e2e8f0;
+			}
+
+			/* Custom Scrollbar */
+			::-webkit-scrollbar {
+				width: 10px;
+			}
+			::-webkit-scrollbar-track {
+				background: #0f172a;
+			}
+			::-webkit-scrollbar-thumb {
+				background: #334155;
+				border-radius: 5px;
+			}
+			::-webkit-scrollbar-thumb:hover {
+				background: #8b5cf6;
+			}
+
+			.reveal {
+				opacity: 0;
+				transform: translateY(30px);
+				transition: all 0.8s ease-out;
+			}
+			.reveal.active {
+				opacity: 1;
+				transform: translateY(0);
+			}
+
+			.glass-nav {
+				background: rgba(15, 23, 42, 0.8);
+				backdrop-filter: blur(12px);
+				border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+			}
+
+			/* Specific Styles for the Image Bubbles */
+			.image-bubble {
+				transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+			}
+			.bubble-one:hover {
+				transform: translate(10px, -10px);
+				box-shadow: 0 10px 30px rgba(139, 92, 246, 0.6);
+			}
+			.bubble-two:hover {
+				transform: translate(-10px, 10px);
+				box-shadow: 0 10px 30px rgba(37, 99, 235, 0.6);
+			}
+		</style>
+	</head>
+	<body class="antialiased selection:bg-accent-500 selection:text-white">
+		<!-- Background Gradients -->
+		<div class="fixed inset-0 z-[-1] overflow-hidden pointer-events-none">
+			<div
+				class="absolute top-0 left-1/4 w-96 h-96 bg-accent-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"
+			></div>
+			<div
+				class="absolute top-0 right-1/4 w-96 h-96 bg-blue-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"
+			></div>
+			<div
+				class="absolute -bottom-32 left-1/3 w-96 h-96 bg-purple-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-4000"
+			></div>
+		</div>
+
+		<!-- Navigation -->
+		<nav
+			class="fixed w-full z-50 glass-nav transition-all duration-300"
+			id="navbar"
+		>
+			<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+				<div class="flex justify-between items-center h-20">
+					<div class="flex-shrink-0 flex items-center">
+						<a href="#" class="text-2xl font-bold text-white tracking-tighter">
+							<span class="text-accent-500">Dev</span> Portfolio
+						</a>
+					</div>
+
+					<!-- Desktop Menu -->
+					<div class="hidden md:block">
+						<div class="ml-10 flex items-baseline space-x-8">
+							<a
+								href="#about"
+								class="hover:text-accent-400 transition-colors px-3 py-2 rounded-md text-sm font-medium"
+								>About</a
+							>
+							<a
+								href="#stack"
+								class="hover:text-accent-400 transition-colors px-3 py-2 rounded-md text-sm font-medium"
+								>Stack</a
+							>
+							<a
+								href="#experience"
+								class="hover:text-accent-400 transition-colors px-3 py-2 rounded-md text-sm font-medium"
+								>Experience</a
+							>
+							<a
+								href="#contact"
+								class="bg-accent-600 hover:bg-accent-500 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors"
+								>Contact Me</a
+							>
+						</div>
+					</div>
+
+					<!-- Mobile menu button -->
+					<div class="md:hidden flex items-center">
+						<button
+							id="mobile-menu-btn"
+							class="text-gray-300 hover:text-white focus:outline-none"
+						>
+							<i data-lucide="menu" class="w-8 h-8"></i>
+						</button>
+					</div>
+				</div>
+			</div>
+
+			<!-- Mobile Menu Panel -->
+			<div
+				id="mobile-menu"
+				class="hidden md:hidden bg-dark-900 border-b border-gray-800"
+			>
+				<div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+					<a
+						href="#about"
+						class="text-gray-300 hover:text-accent-400 block px-3 py-2 rounded-md text-base font-medium"
+						>About</a
+					>
+					<a
+						href="#stack"
+						class="text-gray-300 hover:text-accent-400 block px-3 py-2 rounded-md text-base font-medium"
+						>Stack</a
+					>
+					<a
+						href="#experience"
+						class="text-gray-300 hover:text-accent-400 block px-3 py-2 rounded-md text-base font-medium"
+						>Experience</a
+					>
+					<a
+						href="#contact"
+						class="text-accent-400 block px-3 py-2 rounded-md text-base font-medium"
+						>Contact Me</a
+					>
+				</div>
+			</div>
+		</nav>
+
+		<!-- Hero Section -->
+		<section
+			class="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden"
+		>
+			<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+				<div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+					<!-- Text Content -->
+					<div class="space-y-8 text-center md:text-left">
+						<div
+							class="inline-flex items-center px-3 py-1 rounded-full border border-accent-500/30 bg-accent-500/10 text-accent-400 text-sm font-medium mb-4 animate-[fadeInUp_1s_ease-out]"
+						>
+							<span class="flex h-2 w-2 rounded-full bg-accent-400 mr-2"></span>
+							Available for new projects
+						</div>
+
+						<h1
+							class="text-5xl md:text-7xl font-bold tracking-tight text-white mb-6 animate-[fadeInUp_1s_ease-out_0.2s_both]"
+						>
+							Hi, I'm <br />
+							<span
+								class="text-transparent bg-clip-text bg-gradient-to-r from-accent-400 to-purple-600"
+								>Sourabh Choudhary.</span
+							>
+						</h1>
+
+						<p
+							class="mt-4 max-w-2xl mx-auto md:mx-0 text-xl text-gray-400 animate-[fadeInUp_1s_ease-out_0.4s_both]"
+						>
+							Full-stack developer with 6+ years of experience. I craft clean,
+							performant frontend systems backed by solid APIs and databases.
+						</p>
+
+						<div
+							class="mt-8 flex justify-center md:justify-start gap-4 animate-[fadeInUp_1s_ease-out_0.6s_both]"
+						>
+							<a
+								href="#contact"
+								class="px-8 py-3 rounded-lg bg-accent-600 text-white font-medium hover:bg-accent-500 transition-all transform hover:-translate-y-1 shadow-lg shadow-accent-600/25"
+							>
+								Get in Touch
+							</a>
+							<a
+								href="#stack"
+								class="px-8 py-3 rounded-lg border border-gray-700 text-gray-300 font-medium hover:bg-gray-800 transition-all"
+							>
+								View Stack
+							</a>
+						</div>
+					</div>
+
+					<!-- Image Content -->
+					<!-- <div
+						class="relative animate-[fadeInUp_1s_ease-out_0.6s_both] mx-auto md:mx-0"
+					> -->
+					<!-- Decorative blur behind the image -->
+					<!-- <div
+							class="absolute -inset-4 bg-gradient-to-r from-accent-600 to-purple-600 rounded-full blur-2xl opacity-30"
+						></div>
+						<div
+							class="relative p-2 bg-dark-900/50 rounded-full border-2 border-accent-500/50"
+						>
+							<img
+								src="/images/me.png"
+								alt="Sourabh Choudhary"
+								class="w-64 h-64 md:w-96 md:h-96 object-cover rounded-full shadow-2xl relative z-10"
+							/>
+						</div>
+					</div> -->
+
+					<!-- Image Bubbles Container -->
+					<div
+						id="image-container"
+						class="relative w-[300px] h-[300px] md:w-[400px] md:h-[400px] mx-auto md:mx-0 animate-[fadeInUp_1s_ease-out_0.6s_both] cursor-pointer"
+					>
+						<!-- Bubble 2: Avatar Image (Slightly smaller, offset) -->
+						<div
+							class="image-bubble bubble-two absolute w-5/6 h-5/6 p-2 bg-dark-900/70 rounded-full shadow-xl z-20 animate-float2"
+							style="top: 150px; left: 150px"
+						>
+							<img
+								src="/images/avatar.png"
+								alt="Sourabh Choudhary - Avatar"
+								class="w-full h-full object-cover rounded-full"
+							/>
+						</div>
+						<!-- Bubble 1: Main Photo -->
+						<div
+							class="image-bubble bubble-one absolute w-full h-full p-3 bg-dark-900/50 rounded-full shadow-2xl z-10 animate-float1"
+							style="top: -50px; left: -50px"
+						>
+							<img
+								src="/images/me.png"
+								alt="Sourabh Choudhary - Professional"
+								class="w-full h-full object-cover rounded-full"
+							/>
+						</div>
+					</div>
+				</div>
+
+				<div
+					class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce text-gray-500"
+				>
+					<i data-lucide="chevron-down" class="w-8 h-8"></i>
+				</div>
+			</div>
+		</section>
+
+		<!-- About Section -->
+		<section id="about" class="py-24 bg-dark-800/50">
+			<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+				<div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+					<div class="reveal order-2 lg:order-1 relative">
+						<div
+							class="absolute -inset-4 bg-gradient-to-r from-accent-600 to-blue-600 rounded-xl blur-lg opacity-30"
+						></div>
+						<div
+							class="relative bg-dark-900 border border-gray-800 p-8 rounded-xl shadow-2xl"
+						>
+							<div class="flex items-center gap-4 mb-6">
+								<div
+									class="w-12 h-12 bg-accent-900/50 rounded-lg flex items-center justify-center text-accent-400"
+								>
+									<i data-lucide="code-2" class="w-6 h-6"></i>
+								</div>
+								<div>
+									<h3 class="text-lg font-semibold text-white">Clean Code</h3>
+									<p class="text-sm text-gray-500">Maintainable & Scalable</p>
+								</div>
+							</div>
+							<div class="flex items-center gap-4 mb-6">
+								<div
+									class="w-12 h-12 bg-blue-900/50 rounded-lg flex items-center justify-center text-blue-400"
+								>
+									<i data-lucide="database" class="w-6 h-6"></i>
+								</div>
+								<div>
+									<h3 class="text-lg font-semibold text-white">
+										Solid Architecture
+									</h3>
+									<p class="text-sm text-gray-500">Robust Backend Systems</p>
+								</div>
+							</div>
+							<div class="flex items-center gap-4">
+								<div
+									class="w-12 h-12 bg-green-900/50 rounded-lg flex items-center justify-center text-green-400"
+								>
+									<i data-lucide="users" class="w-6 h-6"></i>
+								</div>
+								<div>
+									<h3 class="text-lg font-semibold text-white">Mentorship</h3>
+									<p class="text-sm text-gray-500">Team Growth & Leadership</p>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="reveal order-1 lg:order-2">
+						<h2 class="text-3xl font-bold text-white mb-6">About Me</h2>
+						<div class="space-y-4 text-gray-400 leading-relaxed">
+							<p>
+								I am a Full-stack developer with 6+ years of experience building
+								fast, scalable, and user-focused web applications. I work mainly
+								with
+								<strong class="text-accent-400"
+									>React, Next.js, TypeScript, and Node.js</strong
+								>, and enjoy creating clean, performant frontend systems backed
+								by solid APIs and databases.
+							</p>
+							<p>
+								Skilled in modern frontend architecture, state management,
+								SSR/SSG patterns, and building reusable UI layers. I am
+								comfortable across the backend as well, working with
+								<strong class="text-white"
+									>Prisma, SQL, and REST-based services</strong
+								>.
+							</p>
+							<p>
+								Beyond the code, I bring experience in mentoring teammates,
+								improving code quality, and contributing to system-level
+								decisions that make products easier to maintain and scale. I'm
+								always learning, improving my problem-solving skills, and
+								exploring better ways to build reliable web experiences.
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- Tech Stack Section (New Categorized Section) -->
+		<section id="stack" class="py-24 bg-dark-800/30">
+			<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+				<div class="flex flex-col md:flex-row justify-between items-end mb-12">
+					<div class="reveal">
+						<h2 class="text-3xl font-bold text-white mb-2">My Tech Stack</h2>
+						<p class="text-gray-400">
+							A comprehensive list of technologies I work with, categorized by
+							domain.
+						</p>
+					</div>
+				</div>
+
+				<!-- Categories Grid -->
+				<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
+					<!-- Category 1: Frontend & Full Stack -->
+					<div class="bg-dark-900 border border-gray-800 p-6 rounded-xl reveal">
+						<h3
+							class="text-xl font-bold text-accent-400 mb-4 flex items-center"
+						>
+							<i data-lucide="layout-grid" class="w-5 h-5 mr-2"></i> Frontend &
+							Full Stack
+						</h3>
+						<div class="grid grid-cols-2 gap-4">
+							<!-- Tech Card: React.js -->
+							<div
+								class="flex items-center p-3 bg-dark-800 rounded-lg border border-gray-700 hover:border-accent-500 transition-all"
+							>
+								<div
+									class="w-8 h-8 flex items-center justify-center rounded-full bg-blue-900/30 mr-3 text-blue-400"
+								>
+									<i data-lucide="atom" class="w-4 h-4"></i>
+								</div>
+								<span class="text-sm text-white">React.js</span>
+							</div>
+							<!-- Tech Card: Next.js -->
+							<div
+								class="flex items-center p-3 bg-dark-800 rounded-lg border border-gray-700 hover:border-accent-500 transition-all"
+							>
+								<div
+									class="w-8 h-8 flex items-center justify-center rounded-full bg-white/30 mr-3 text-white"
+								>
+									<span class="font-black text-sm">N</span>
+								</div>
+								<span class="text-sm text-white">Next.js</span>
+							</div>
+						</div>
+					</div>
+
+					<!-- Category 2: Languages & Runtime -->
+					<div class="bg-dark-900 border border-gray-800 p-6 rounded-xl reveal">
+						<h3
+							class="text-xl font-bold text-accent-400 mb-4 flex items-center"
+						>
+							<i data-lucide="code" class="w-5 h-5 mr-2"></i> Languages &
+							Runtime
+						</h3>
+						<div class="grid grid-cols-2 gap-4">
+							<!-- Tech Card: Javascript -->
+							<div
+								class="flex items-center p-3 bg-dark-800 rounded-lg border border-gray-700 hover:border-accent-500 transition-all"
+							>
+								<div
+									class="w-8 h-8 flex items-center justify-center rounded-full bg-yellow-900/30 mr-3 text-yellow-400"
+								>
+									<span class="font-bold text-sm">JS</span>
+								</div>
+								<span class="text-sm text-white">Javascript</span>
+							</div>
+							<!-- Tech Card: Typescript -->
+							<div
+								class="flex items-center p-3 bg-dark-800 rounded-lg border border-gray-700 hover:border-accent-500 transition-all"
+							>
+								<div
+									class="w-8 h-8 flex items-center justify-center rounded-full bg-blue-700/30 mr-3 text-blue-400"
+								>
+									<span class="font-bold text-sm">TS</span>
+								</div>
+								<span class="text-sm text-white">Typescript</span>
+							</div>
+							<!-- Tech Card: Node.js -->
+							<div
+								class="flex items-center p-3 bg-dark-800 rounded-lg border border-gray-700 hover:border-accent-500 transition-all"
+							>
+								<div
+									class="w-8 h-8 flex items-center justify-center rounded-full bg-green-900/30 mr-3 text-green-400"
+								>
+									<i data-lucide="server" class="w-4 h-4"></i>
+								</div>
+								<span class="text-sm text-white">Node.js</span>
+							</div>
+							<!-- Tech Card: Java -->
+							<div
+								class="flex items-center p-3 bg-dark-800 rounded-lg border border-gray-700 hover:border-accent-500 transition-all"
+							>
+								<div
+									class="w-8 h-8 flex items-center justify-center rounded-full bg-red-900/30 mr-3 text-red-400"
+								>
+									<i data-lucide="coffee" class="w-4 h-4"></i>
+								</div>
+								<span class="text-sm text-white">Java</span>
+							</div>
+						</div>
+					</div>
+
+					<!-- Category 3: Database & ORM -->
+					<div class="bg-dark-900 border border-gray-800 p-6 rounded-xl reveal">
+						<h3
+							class="text-xl font-bold text-accent-400 mb-4 flex items-center"
+						>
+							<i data-lucide="database" class="w-5 h-5 mr-2"></i> Database & ORM
+						</h3>
+						<div class="grid grid-cols-2 gap-4">
+							<!-- Tech Card: Postgresql -->
+							<div
+								class="flex items-center p-3 bg-dark-800 rounded-lg border border-gray-700 hover:border-accent-500 transition-all"
+							>
+								<div
+									class="w-8 h-8 flex items-center justify-center rounded-full bg-blue-700/30 mr-3 text-blue-400"
+								>
+									<i data-lucide="database" class="w-4 h-4"></i>
+								</div>
+								<span class="text-sm text-white">Postgresql</span>
+							</div>
+							<!-- Tech Card: MongoDB -->
+							<div
+								class="flex items-center p-3 bg-dark-800 rounded-lg border border-gray-700 hover:border-accent-500 transition-all"
+							>
+								<div
+									class="w-8 h-8 flex items-center justify-center rounded-full bg-green-900/30 mr-3 text-green-400"
+								>
+									<i data-lucide="database" class="w-4 h-4"></i>
+								</div>
+								<span class="text-sm text-white">MongoDB</span>
+							</div>
+							<!-- Tech Card: Prisma -->
+							<div
+								class="flex items-center p-3 bg-dark-800 rounded-lg border border-gray-700 hover:border-accent-500 transition-all"
+							>
+								<div
+									class="w-8 h-8 flex items-center justify-center rounded-full bg-gray-600/30 mr-3 text-gray-300"
+								>
+									<span class="font-bold text-sm">PR</span>
+								</div>
+								<span class="text-sm text-white">Prisma</span>
+							</div>
+						</div>
+					</div>
+
+					<!-- Category 4: DevOps, VCS & Testing -->
+					<div
+						class="col-span-1 md:col-span-2 xl:col-span-3 bg-dark-900 border border-gray-800 p-6 rounded-xl reveal"
+					>
+						<h3
+							class="text-xl font-bold text-accent-400 mb-4 flex items-center"
+						>
+							<i data-lucide="terminal" class="w-5 h-5 mr-2"></i> DevOps, VCS &
+							Testing
+						</h3>
+						<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+							<!-- Tech Card: Git -->
+							<div
+								class="flex items-center p-3 bg-dark-800 rounded-lg border border-gray-700 hover:border-accent-500 transition-all"
+							>
+								<div
+									class="w-8 h-8 flex items-center justify-center rounded-full bg-red-700/30 mr-3 text-red-400"
+								>
+									<i data-lucide="git-branch" class="w-4 h-4"></i>
+								</div>
+								<span class="text-sm text-white">Git</span>
+							</div>
+							<!-- Tech Card: Azure DevOps -->
+							<div
+								class="flex items-center p-3 bg-dark-800 rounded-lg border border-gray-700 hover:border-accent-500 transition-all"
+							>
+								<div
+									class="w-8 h-8 flex items-center justify-center rounded-full bg-sky-900/30 mr-3 text-sky-400"
+								>
+									<i data-lucide="cloud" class="w-4 h-4"></i>
+								</div>
+								<span class="text-sm text-white">Azure DevOps</span>
+							</div>
+							<!-- Tech Card: Jest -->
+							<div
+								class="flex items-center p-3 bg-dark-800 rounded-lg border border-gray-700 hover:border-accent-500 transition-all"
+							>
+								<div
+									class="w-8 h-8 flex items-center justify-center rounded-full bg-pink-900/30 mr-3 text-pink-400"
+								>
+									<i data-lucide="test-tube" class="w-4 h-4"></i>
+								</div>
+								<span class="text-sm text-white">Jest</span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- Professional Experience Section (New Linked List Style) -->
+		<section id="experience" class="py-24 bg-dark-900 relative">
+			<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+				<div class="text-center mb-16 reveal">
+					<h2 class="text-3xl font-bold text-white mb-4">
+						Professional Journey
+					</h2>
+					<p class="text-gray-400">My path through the tech landscape.</p>
+				</div>
+
+				<!-- Linked List Container -->
+				<div class="relative max-w-6xl mx-auto reveal">
+					<!-- Desktop Connecting Line -->
+					<div
+						class="hidden md:block absolute top-[64px] left-0 w-full h-0.5 bg-gradient-to-r from-dark-700 via-accent-900 to-dark-700 z-0"
+					></div>
+
+					<div
+						class="flex flex-col md:flex-row justify-between items-center gap-12 md:gap-4 relative z-10"
+					>
+						<!-- Node 1: Bodex -->
+						<div
+							class="relative group flex flex-col items-center w-full md:w-auto"
+						>
+							<div
+								class="w-32 h-32 bg-dark-800 border-2 border-gray-700 rounded-2xl flex flex-col items-center justify-center p-4 transition-all duration-300 group-hover:border-accent-500 group-hover:shadow-[0_0_30px_rgba(139,92,246,0.3)] group-hover:-translate-y-2 relative z-10 bg-dark-900"
+							>
+								<!-- Image Placeholder -->
+								<div
+									class="w-12 h-12 rounded-lg mb-3 flex items-center justify-center text-gray-400"
+								>
+									<img src="/images/bdx.png" alt="" class="rounded-full" />
+								</div>
+								<span class="font-bold text-white text-sm text-center"
+									>Bodex</span
+								>
+							</div>
+
+							<!-- Desktop Arrow -->
+							<div
+								class="hidden md:block absolute top-[52px] -right-[50%] transform translate-x-1/2 text-gray-700"
+							>
+								<i data-lucide="arrow-right" class="w-6 h-6"></i>
+							</div>
+							<!-- Mobile Arrow -->
+							<div
+								class="md:hidden absolute -bottom-10 left-1/2 transform -translate-x-1/2 text-gray-700"
+							>
+								<i data-lucide="arrow-down" class="w-6 h-6"></i>
+							</div>
+						</div>
+
+						<!-- Node 2: Techindustan -->
+						<div
+							class="relative group flex flex-col items-center w-full md:w-auto"
+						>
+							<div
+								class="w-32 h-32 bg-dark-800 border-2 border-gray-700 rounded-2xl flex flex-col items-center justify-center p-4 transition-all duration-300 group-hover:border-accent-500 group-hover:shadow-[0_0_30px_rgba(139,92,246,0.3)] group-hover:-translate-y-2 relative z-10 bg-dark-900"
+							>
+								<div
+									class="w-12 h-12 rounded-lg mb-3 flex items-center justify-center text-gray-400"
+								>
+									<img src="/images/th.jpg" alt="" class="rounded-full" />
+								</div>
+								<span class="font-bold text-white text-sm text-center"
+									>Techindustan</span
+								>
+							</div>
+
+							<!-- Desktop Arrow -->
+							<div
+								class="hidden md:block absolute top-[52px] -right-[50%] transform translate-x-1/2 text-gray-700"
+							>
+								<i data-lucide="arrow-right" class="w-6 h-6"></i>
+							</div>
+							<!-- Mobile Arrow -->
+							<div
+								class="md:hidden absolute -bottom-10 left-1/2 transform -translate-x-1/2 text-gray-700"
+							>
+								<i data-lucide="arrow-down" class="w-6 h-6"></i>
+							</div>
+						</div>
+
+						<!-- Node 3: Grassdoor -->
+						<div
+							class="relative group flex flex-col items-center w-full md:w-auto"
+						>
+							<div
+								class="w-32 h-32 bg-dark-800 border-2 border-gray-700 rounded-2xl flex flex-col items-center justify-center p-4 transition-all duration-300 group-hover:border-accent-500 group-hover:shadow-[0_0_30px_rgba(139,92,246,0.3)] group-hover:-translate-y-2 relative z-10 bg-dark-900"
+							>
+								<div
+									class="w-12 h-12 rounded-lg mb-3 flex items-center justify-center text-gray-400"
+								>
+									<img src="/images/gd.jpeg" alt="" class="rounded-full" />
+								</div>
+								<span class="font-bold text-white text-sm text-center"
+									>Grassdoor</span
+								>
+							</div>
+
+							<!-- Desktop Arrow -->
+							<div
+								class="hidden md:block absolute top-[52px] -right-[50%] transform translate-x-1/2 text-gray-700"
+							>
+								<i data-lucide="arrow-right" class="w-6 h-6"></i>
+							</div>
+							<!-- Mobile Arrow -->
+							<div
+								class="md:hidden absolute -bottom-10 left-1/2 transform -translate-x-1/2 text-gray-700"
+							>
+								<i data-lucide="arrow-down" class="w-6 h-6"></i>
+							</div>
+						</div>
+
+						<!-- Node 4: Omnicom Global Solutions -->
+						<div
+							class="relative group flex flex-col items-center w-full md:w-auto"
+						>
+							<div
+								class="w-32 h-32 bg-dark-800 border-2 border-gray-700 rounded-2xl flex flex-col items-center justify-center p-4 transition-all duration-300 group-hover:border-accent-500 group-hover:shadow-[0_0_30px_rgba(139,92,246,0.3)] group-hover:-translate-y-2 relative z-10 bg-dark-900"
+							>
+								<div
+									class="w-12 h-12 rounded-lg mb-3 flex items-center justify-center text-gray-400"
+								>
+									<img src="/images/ogs.jpeg" alt="" class="rounded-full" />
+								</div>
+								<span class="font-bold text-white text-sm text-center"
+									>Omnicom</span
+								>
+							</div>
+
+							<!-- Desktop Arrow -->
+							<div
+								class="hidden md:block absolute top-[52px] -right-[50%] transform translate-x-1/2 text-gray-700"
+							>
+								<i data-lucide="arrow-right" class="w-6 h-6"></i>
+							</div>
+							<!-- Mobile Arrow -->
+							<div
+								class="md:hidden absolute -bottom-10 left-1/2 transform -translate-x-1/2 text-gray-700"
+							>
+								<i data-lucide="arrow-down" class="w-6 h-6"></i>
+							</div>
+						</div>
+
+						<!-- Node 5: Next? -->
+						<div
+							class="relative group flex flex-col items-center w-full md:w-auto cursor-pointer"
+						>
+							<div
+								class="w-32 h-32 bg-accent-900/10 border-2 border-dashed border-accent-500/50 rounded-2xl flex flex-col items-center justify-center p-4 transition-all duration-300 group-hover:border-accent-400 group-hover:bg-accent-900/20 group-hover:-translate-y-2 relative z-10 backdrop-blur-sm"
+							>
+								<div
+									class="w-12 h-12 bg-accent-500/20 rounded-full mb-3 flex items-center justify-center animate-pulse"
+								>
+									<span class="text-2xl font-bold text-accent-400">?</span>
+								</div>
+								<span
+									class="font-bold text-accent-300 text-sm text-center leading-tight"
+									>Next could<br />be yours</span
+								>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- Contact Section -->
+		<section id="contact" class="py-24 relative">
+			<div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center reveal">
+				<h2 class="text-3xl font-bold text-white mb-6">Let's Work Together</h2>
+				<p class="text-gray-400 mb-10 text-lg">
+					I'm currently available for new opportunities. Whether you have a
+					question or just want to say hi, my inbox is always open.
+				</p>
+
+				<div
+					class="bg-dark-800/50 p-8 rounded-2xl border border-gray-800 text-left"
+				>
+					<form
+						onsubmit="event.preventDefault(); alert('Thanks for reaching out! This is a demo form.');"
+						class="space-y-6"
+					>
+						<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+							<div>
+								<label class="block text-sm font-medium text-gray-400 mb-2"
+									>Name</label
+								>
+								<input
+									type="text"
+									class="w-full bg-dark-900 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-accent-500 transition-colors"
+									placeholder="John Doe"
+								/>
+							</div>
+							<div>
+								<label class="block text-sm font-medium text-gray-400 mb-2"
+									>Email</label
+								>
+								<input
+									type="email"
+									class="w-full bg-dark-900 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-accent-500 transition-colors"
+									placeholder="john@example.com"
+								/>
+							</div>
+						</div>
+						<div>
+							<label class="block text-sm font-medium text-gray-400 mb-2"
+								>Message</label
+							>
+							<textarea
+								rows="4"
+								class="w-full bg-dark-900 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-accent-500 transition-colors"
+								placeholder="Tell me about your project..."
+							></textarea>
+						</div>
+						<button
+							type="submit"
+							class="w-full bg-accent-600 hover:bg-accent-500 text-white font-bold py-3 rounded-lg transition-all transform hover:-translate-y-1"
+						>
+							Send Message
+						</button>
+					</form>
+				</div>
+
+				<div class="mt-12 flex justify-center space-x-6">
+					<a
+						target="_blank"
+						href="https://github.com/sourabh003"
+						class="text-gray-400 hover:text-accent-400 transition-colors"
+					>
+						<i data-lucide="github" class="w-6 h-6"></i>
+					</a>
+					<a
+						target="_blank"
+						href="https://www.linkedin.com/in/sourabh-choudhary-083978199/?skipRedirect=true"
+						class="text-gray-400 hover:text-accent-400 transition-colors"
+					>
+						<i data-lucide="linkedin" class="w-6 h-6"></i>
+					</a>
+					<a
+						target="_blank"
+						href="https://x.com/its_sourabh_22"
+						class="text-gray-400 hover:text-accent-400 transition-colors"
+					>
+						<i data-lucide="twitter" class="w-6 h-6"></i>
+					</a>
+					<a
+						target="_blank"
+						href="mailto:csourabh003@gmail.com"
+						class="text-gray-400 hover:text-accent-400 transition-colors"
+					>
+						<i data-lucide="mail" class="w-6 h-6"></i>
+					</a>
+				</div>
+			</div>
+		</section>
+
+		<!-- Footer -->
+		<footer
+			class="py-8 border-t border-gray-800 text-center text-gray-500 text-sm"
+		>
+			<p>
+				&copy; 2024 Full Stack Developer Portfolio. Built with Tailwind CSS.
+			</p>
+		</footer>
+
+		<!-- Scripts -->
+		<script>
+			// Initialize Icons
+			lucide.createIcons();
+
+			// Mobile Menu Toggle
+			const btn = document.getElementById("mobile-menu-btn");
+			const menu = document.getElementById("mobile-menu");
+
+			btn.addEventListener("click", () => {
+				menu.classList.toggle("hidden");
+			});
+
+			// Scroll Reveal Animation
+			const revealElements = document.querySelectorAll(".reveal");
+
+			const revealCallback = (entries, observer) => {
+				entries.forEach((entry) => {
+					if (entry.isIntersecting) {
+						entry.target.classList.add("active");
+					}
+				});
+			};
+
+			const revealOptions = {
+				threshold: 0.15,
+				rootMargin: "0px 0px -50px 0px",
+			};
+
+			const revealObserver = new IntersectionObserver(
+				revealCallback,
+				revealOptions
+			);
+
+			revealElements.forEach((el) => {
+				revealObserver.observe(el);
+			});
+
+			// Navbar blur effect on scroll
+			const navbar = document.getElementById("navbar");
+			window.addEventListener("scroll", () => {
+				if (window.scrollY > 50) {
+					navbar.classList.add("shadow-lg");
+				} else {
+					navbar.classList.remove("shadow-lg");
+				}
+			});
+		</script>
+	</body>
+</html>
